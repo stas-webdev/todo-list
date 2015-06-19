@@ -52,28 +52,7 @@ gulp.task('clean', function (cb) {
 });
 
 // JS
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-gulp.task('scripts', function () {
-    return browserify({
-        entries: config.scripts.main,
-        debug: true
-    }).bundle()
-        .pipe(source(config.scripts.bundle))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(uglify())
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(config.scripts.build));
-});
+gulp.task('scripts', require('./gulp/tasks/scripts')(config.scripts));
 
 // LESS
-var less = require('gulp-less');
-gulp.task('styles', function () {
-    gulp.src(config.styles.mainFile)
-        .pipe(less())
-        .pipe(gulp.dest(config.styles.build));
-});
+gulp.task('styles', require('./gulp/tasks/styles')(config.styles));
