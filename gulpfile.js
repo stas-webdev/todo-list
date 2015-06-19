@@ -22,6 +22,7 @@ var config = {
 
     styles: {
         src: './less/**/*.less',
+        mainFile: './less/main.less',
         build: './build/css/'
     }
 };
@@ -72,7 +73,7 @@ gulp.task('scripts', function () {
 // LESS
 var less = require('gulp-less');
 gulp.task('styles', function () {
-    gulp.src(config.styles.src)
+    gulp.src(config.styles.mainFile)
         .pipe(less())
         .pipe(gulp.dest(config.styles.build));
 });
