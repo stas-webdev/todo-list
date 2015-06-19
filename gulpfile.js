@@ -4,7 +4,12 @@ var path = require('path');
 // Конфигурация
 var config = {
     dist: {
-        'directory': './dist'
+        dest: './dist/',
+        resources: [
+            { src: './build/**/*.*', dest: 'build'},
+            { src: './vendor/**/*.*', dest: 'vendor' },
+            { src: './index.html', dest: '' }
+        ]
     },
 
     scripts: {
@@ -22,11 +27,21 @@ var config = {
 };
 
 // Задача по-умолчанию
-gulp.task('default', ['scripts', 'styles'], function () {});
+gulp.task('default', ['scripts', 'styles'], function () {
+});
 
+// Автосборка
 gulp.task('watch', ['default'], function () {
     gulp.watch(config.scripts.src, ['scripts']);
     gulp.watch(config.styles.src, ['styles']);
+});
+
+// Сборка для дистрибуции
+gulp.task('dist', ['default'], function () {
+    config.dist.resources.forEach(function (res) {
+        gulp.src(res.src)
+            .pipe(gulp.dest(config.dist.dest + res.dest));
+    });
 });
 
 // JS
