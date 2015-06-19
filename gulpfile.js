@@ -37,11 +37,17 @@ gulp.task('watch', ['default'], function () {
 });
 
 // Сборка для дистрибуции
-gulp.task('dist', ['default'], function () {
+gulp.task('dist', ['clean', 'default'], function () {
     config.dist.resources.forEach(function (res) {
         gulp.src(res.src)
             .pipe(gulp.dest(config.dist.dest + res.dest));
     });
+});
+
+//Очистка
+var del = require('del');
+gulp.task('clean', function (cb) {
+    return del(['./build', config.dist.dest], cb);
 });
 
 // JS
