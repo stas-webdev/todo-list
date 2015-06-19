@@ -22,7 +22,9 @@ var config = {
 };
 
 // Задача по-умолчанию
-gulp.task('default', ['scripts', 'styles'], function () {
+gulp.task('default', ['scripts', 'styles'], function () {});
+
+gulp.task('watch', ['default'], function () {
     gulp.watch(config.scripts.src, ['scripts']);
     gulp.watch(config.styles.src, ['styles']);
 });
