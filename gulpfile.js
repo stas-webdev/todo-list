@@ -47,15 +47,20 @@ gulp.task('dist', ['default'], function () {
 // JS
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
-var exorcist = require('exorcist');
+var buffer = require('vinyl-buffer');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
 gulp.task('scripts', function () {
-    var bundleMap = path.join(config.scripts.build, config.scripts.bundleMap);
-    return browserify({ debug: true })
-        .add(config.scripts.main)
-        .bundle()
-        .pipe(exorcist(bundleMap))
+    return browserify({
+        entries: config.scripts.main,
+        debug: true
+    }).bundle()
         .pipe(source(config.scripts.bundle))
-        .pipe(gulp.dest(config.scripts.build))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(config.scripts.build));
 });
 
 // LESS
