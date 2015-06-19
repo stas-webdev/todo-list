@@ -6,7 +6,7 @@ var config = {
     dist: {
         dest: './dist/',
         resources: [
-            { src: './build/**/*.*', dest: 'build'},
+            { src: ['./build/**/*.*', '!./build/**/*.map'], dest: 'build'},
             { src: './vendor/**/*.*', dest: 'vendor' },
             { src: './index.html', dest: '' }
         ]
