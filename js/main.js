@@ -1,4 +1,5 @@
-var Controller = require('./inbox/InboxController');
+var AppRouter = require('./AppRouter');
+var AppController = require('./AppController');
 
 var app = new Marionette.Application();
 
@@ -7,12 +8,16 @@ app.addRegions({
 });
 
 app.on('start', function () {
-    this.controller = new Controller();
-    this.controller.collection.fetch().then(function () {
-        this.regionMain.show(this.controller.mainView);
-    }.bind(this))
+    this.controller = new AppController();
+    this.controller.on('view:open', onMainViewOpen);
+    this.router = new AppRouter({ controller: this.controller });
+    Backbone.history.start();
 });
 
 $(document).ready(function () {
     app.start();
 });
+
+function onMainViewOpen (args) {
+    app.regionMain.show(args.view);
+}

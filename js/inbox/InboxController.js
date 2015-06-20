@@ -8,19 +8,31 @@ var ItemsCollection = Backbone.Collection.extend({
 
 module.exports = Marionette.Controller.extend({
 
+    mainView: null,
+
     initialize: function () {
         this.collection = new ItemsCollection();
-
-        this.mainView = new MainView();
-        this.listenTo(this.mainView, 'render', this.onMainViewRender);
-        this.listenTo(this.mainView, 'item:create', this.onUICreateItem);
-
-        this.listView = new ItemsCollectionView({ collection: this.collection });
-        this.listenTo(this.listView, 'item:complete', this.onUICompleteItem);
     },
 
-    onMainViewRender: function () {
-        this.mainView.listRegion.show(this.listView);
+    open: function () {
+        if (this.mainView) this.stopListening(this.mainView);
+        this.mainView = new MainView({ collection: this.collection });
+        this.bindViewEvents(this.mainView);
+        this.trigger('view:open', { view: this.mainView });
+
+        if (this.listView) this.stopListening(this.listView);
+        this.listView = new ItemsCollectionView({ collection: this.collection });
+        this.bindViewEvents(this.listView);
+        this.collection.fetch().then(function () {
+            this.listView.render();
+            this.mainView.listRegion.show(this.listView);
+        }.bind(this));
+    },
+
+    bindViewEvents: function (view) {
+        this.listenTo(view, 'item:create', this.onUICreateItem);
+        this.listenTo(view, 'item:complete', this.onUICompleteItem);
+        return this;
     },
 
     onUICreateItem: function (args) {
@@ -38,7 +50,6 @@ module.exports = Marionette.Controller.extend({
     onUICompleteItem: function (itemView, args) {
         //console.log('onUICompleteItem', arguments);
         args.model.set('completed', !args.model.get('completed'));
-        args.model.save();
-        itemView.render();
+        this.trigger('item:archive', args);
     }
 });

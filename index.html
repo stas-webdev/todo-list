@@ -34,25 +34,42 @@
     </div>
 </nav>
 
-<div id="RegionMain"></div>
+<div class="container skeleton-container">
+    <div class="row">
+        <div class="col-lg-2" id="RegionSidebar">
+            <div class="panel panel-default">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="#inbox"><i class="fa fa-inbox fa-fw"></i> Входящие</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#archive"><i class="fa fa-archive fa-fw"></i> Архив</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-10" id="RegionMain"></div>
+    </div>
+</div>
+
 
 <script type="text/html" id="tpl_Inbox_MainView">
-    <div class="container view-default">
+    <div class="view-default">
         <div class="top-block" id="TopBlock">
             <form id="Form_NewTask">
                 <div class="input-group input-group-lg">
                     <input name="title" type="text" class="form-control" placeholder="Новая задача">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-level-down" ></i>
-                            Создать
-                        </button>
-                    </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-level-down"></i>
+                        Создать
+                    </button>
+                </span>
                 </div>
             </form>
         </div>
-        <div id="ItemsList"></div>
     </div>
+    <div id="ItemsList"></div>
 </script>
 
 <script type="text/html" id="tpl_Items_ListItem">
@@ -60,9 +77,15 @@
         <div class="list-item-title <%=(completed ? 'completed' : '')%>">
             <a href="#" class="ui-complete"><i class="icon fa fa-check fa-2x"></i></a>
             <h3><%=title%></h3>
-            <div class="controls">
-                <a href="#" class="ui-remove"></a>
-            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="tpl_Archive_ListItemView">
+    <div class="list-item">
+        <div class="list-item-title <%=(completed ? 'completed' : '')%>">
+            <a href="#" class="ui-complete"><i class="icon fa fa-check fa-2x"></i></a>
+            <h3><%=title%></h3>
         </div>
     </div>
 </script>
