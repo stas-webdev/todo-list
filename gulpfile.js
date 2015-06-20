@@ -27,18 +27,22 @@ var config = {
     }
 };
 
-// Задача по-умолчанию
-gulp.task('default', ['scripts', 'styles'], function () {
+gulp.task('default', ['build'], function () {
+
+});
+
+// Сборка
+gulp.task('build', ['scripts', 'styles'], function () {
 });
 
 // Автосборка
-gulp.task('watch', ['default'], function () {
+gulp.task('watch', ['build'], function () {
     gulp.watch(config.scripts.src, ['scripts']);
     gulp.watch(config.styles.src, ['styles']);
 });
 
 // Сборка для дистрибуции
-gulp.task('dist', ['clean', 'default'], function () {
+gulp.task('dist', ['dist:clean', 'build'], function () {
     config.dist.resources.forEach(function (res) {
         gulp.src(res.src)
             .pipe(gulp.dest(config.dist.dest + res.dest));
@@ -47,8 +51,8 @@ gulp.task('dist', ['clean', 'default'], function () {
 
 //Очистка
 var del = require('del');
-gulp.task('clean', function (cb) {
-    return del(['./build', config.dist.dest], cb);
+gulp.task('dist:clean', function (cb) {
+    return del(config.dist.dest, cb);
 });
 
 // JS
