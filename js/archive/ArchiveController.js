@@ -21,7 +21,8 @@ module.exports = Marionette.Controller.extend({
     },
 
     bindViewEvents: function (view) {
-        this.listenTo(view, 'item:activate', this.onItemActivate)
+        this.listenTo(view, 'item:activate', this.onItemActivate);
+        this.listenTo(view, 'item:delete', this.onItemDelete);
     },
 
     addItem: function (model) {
@@ -33,5 +34,9 @@ module.exports = Marionette.Controller.extend({
     onItemActivate: function (itemView, args) {
         //console.log('item activate', arguments);
         this.trigger('item:activate', args);
+    },
+
+    onItemDelete: function (itemView, args) {
+        args.model.destroy();
     }
 });

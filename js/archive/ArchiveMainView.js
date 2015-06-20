@@ -5,11 +5,13 @@ var ItemView = Marionette.ItemView.extend({
     className: 'list-item',
 
     ui: {
-        'activate': '.ui-activate'
+        'activate': '.ui-activate',
+        'delete': '.ui-delete'
     },
 
     triggers: {
-        'click @ui.activate': 'activate'
+        'click @ui.activate': 'activate',
+        'click @ui.delete': 'delete'
     },
 
     onRender: function () {
