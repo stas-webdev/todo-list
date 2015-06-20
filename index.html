@@ -65,12 +65,12 @@
             <form id="Form_NewTask">
                 <div class="input-group input-group-lg">
                     <input name="title" type="text" class="form-control" placeholder="Новая задача">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fa fa-level-down"></i>
-                        Создать
-                    </button>
-                </span>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-level-down"></i>
+                            Создать
+                        </button>
+                    </span>
                 </div>
             </form>
         </div>
@@ -80,7 +80,7 @@
 
 <script type="text/html" id="tpl_Items_ListItem">
     <div class="list-item-header">
-        <h4><%=title%></h4>
+        <h4 class="title"><a class="ui-details" href="#"><%=title%></a></h4>
         <div class="controls">
             <a href="#" class="ui-complete"><i class="icon fa fa-check fa-2x"></i></a>
         </div>

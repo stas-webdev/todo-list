@@ -44,6 +44,7 @@ module.exports = Marionette.Controller.extend({
     onUICreateItem: function (args) {
         //console.log('onUICreateItem', arguments);
         var modelData = {
+            created: (new Date()),
             completed: false
         };
         args.data.forEach(function (attr) {
@@ -55,7 +56,9 @@ module.exports = Marionette.Controller.extend({
 
     onUICompleteItem: function (itemView, args) {
         //console.log('onUICompleteItem', arguments);
-        args.model.set('completed', !args.model.get('completed'));
+        args.model.set('completed', true);
+        args.silentDestroy = true;
+        itemView.render();
         this.trigger('item:archive', args);
     }
 });

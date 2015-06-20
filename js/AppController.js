@@ -32,7 +32,7 @@ module.exports = Marionette.Controller.extend({
     onItemArchive: function (args) {
         //console.log('onItemArchive', arguments);
         var model = args.model;
-        model.destroy();
+        model.destroy({ silent: (!!args.silentDestroy) });
         this.archiveController.addItem(model);
     },
 
@@ -40,6 +40,7 @@ module.exports = Marionette.Controller.extend({
         //console.log('on Item Activate', arguments);
         var model = args.model;
         model.destroy();
+        model.set('completed', false);
         this.inboxController.addItem(model);
     }
 });

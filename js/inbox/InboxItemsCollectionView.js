@@ -5,11 +5,25 @@ var ItemView = Marionette.ItemView.extend({
     className: 'list-item',
 
     ui: {
-        'complete': '.ui-complete'
+        'complete': '.ui-complete',
+        'details': '.ui-details'
     },
 
     triggers: {
         'click @ui.complete': 'complete'
+    },
+
+    events: {
+        'click @ui.details': 'onUIDetailsClick'
+    },
+
+    onRender: function () {
+        this.$el.toggleClass('completed', !!this.model.get('completed'));
+    },
+
+    onDetailsClick: function (e) {
+        console.log('onUIDetails', arguments);
+        e.preventDefault();
     }
 });
 
