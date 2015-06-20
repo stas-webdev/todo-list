@@ -1,8 +1,19 @@
-
 @import "bootstrap";
 
 .skeleton-container {
   margin-top: 2em;
+}
+
+.side-nav-item {
+  a {
+    text-decoration: none;
+
+    &:hover, &:focus, &:active {
+      .title {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .list-item {
