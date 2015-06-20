@@ -1,9 +1,9 @@
 
-var DefaultView = require('./DefaultView');
-var ItemsCollectionView = require('./ItemsCollectionView');
+var MainView = require('./InboxMainView');
+var ItemsCollectionView = require('./InboxItemsCollectionView');
 
 var ItemsCollection = Backbone.Collection.extend({
-    localStorage: new Backbone.LocalStorage('Items')
+    localStorage: new Backbone.LocalStorage('Inbox')
 });
 
 module.exports = Marionette.Controller.extend({
@@ -11,16 +11,16 @@ module.exports = Marionette.Controller.extend({
     initialize: function () {
         this.collection = new ItemsCollection();
 
-        this.defaultView = new DefaultView();
-        this.listenTo(this.defaultView, 'render', this.onDefaultViewRender);
-        this.listenTo(this.defaultView, 'item:create', this.onUICreateItem);
+        this.mainView = new MainView();
+        this.listenTo(this.mainView, 'render', this.onMainViewRender);
+        this.listenTo(this.mainView, 'item:create', this.onUICreateItem);
 
         this.listView = new ItemsCollectionView({ collection: this.collection });
         this.listenTo(this.listView, 'item:complete', this.onUICompleteItem);
     },
 
-    onDefaultViewRender: function () {
-        this.defaultView.listRegion.show(this.listView);
+    onMainViewRender: function () {
+        this.mainView.listRegion.show(this.listView);
     },
 
     onUICreateItem: function (args) {

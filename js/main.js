@@ -1,4 +1,4 @@
-var Controller = require('./DefaultController');
+var Controller = require('./inbox/InboxController');
 
 var app = new Marionette.Application();
 
@@ -9,7 +9,7 @@ app.addRegions({
 app.on('start', function () {
     this.controller = new Controller();
     this.controller.collection.fetch().then(function () {
-        this.regionMain.show(this.controller.defaultView);
+        this.regionMain.show(this.controller.mainView);
     }.bind(this))
 });
 

@@ -1,6 +1,6 @@
 
 module.exports = Marionette.LayoutView.extend({
-    'template': '#tpl_DefaultView',
+    'template': '#tpl_Inbox_MainView',
 
     regions: {
         formRegion: '#TopBlock',
