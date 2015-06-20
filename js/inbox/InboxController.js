@@ -35,6 +35,12 @@ module.exports = Marionette.Controller.extend({
         return this;
     },
 
+    addItem: function (model) {
+        this.collection.add(model);
+        model.save();
+        return this;
+    },
+
     onUICreateItem: function (args) {
         //console.log('onUICreateItem', arguments);
         var modelData = {

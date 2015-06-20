@@ -60,7 +60,7 @@
 
 
 <script type="text/html" id="tpl_Inbox_MainView">
-    <div class="view-default">
+    <div class="main-view-default">
         <div class="top-block" id="TopBlock">
             <form id="Form_NewTask">
                 <div class="input-group input-group-lg">
@@ -74,24 +74,28 @@
                 </div>
             </form>
         </div>
+        <div id="ItemsList"></div>
     </div>
-    <div id="ItemsList"></div>
 </script>
 
 <script type="text/html" id="tpl_Items_ListItem">
-    <div class="list-item">
-        <div class="list-item-title <%=(completed ? 'completed' : '')%>">
+    <div class="list-item-header">
+        <h4><%=title%></h4>
+        <div class="controls">
             <a href="#" class="ui-complete"><i class="icon fa fa-check fa-2x"></i></a>
-            <h3><%=title%></h3>
         </div>
     </div>
 </script>
 
+<script type="text/html" id="tpl_Archive_MainView">
+    <ul class="list-body"></ul>
+</script>
+
 <script type="text/html" id="tpl_Archive_ListItemView">
-    <div class="list-item">
-        <div class="list-item-title <%=(completed ? 'completed' : '')%>">
-            <a href="#" class="ui-complete"><i class="icon fa fa-check fa-2x"></i></a>
-            <h3><%=title%></h3>
+    <div class="list-item-header">
+        <h4 class="title"><%=title%></h4>
+        <div class="controls">
+            <a class="ui-activate btn btn-default" href="#"><i class="icon fa fa-reply"></i> Активировать</a>
         </div>
     </div>
 </script>

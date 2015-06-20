@@ -11,6 +11,7 @@ module.exports = Marionette.Controller.extend({
 
         this.archiveController = new ArchiveController();
         this.listenTo(this.archiveController, 'view:open', this.onViewOpen);
+        this.listenTo(this.archiveController, 'item:activate', this.onItemActivate);
     },
 
     openInbox: function () {
@@ -33,5 +34,12 @@ module.exports = Marionette.Controller.extend({
         var model = args.model;
         model.destroy();
         this.archiveController.addItem(model);
+    },
+
+    onItemActivate: function (args) {
+        //console.log('on Item Activate', arguments);
+        var model = args.model;
+        model.destroy();
+        this.inboxController.addItem(model);
     }
 });

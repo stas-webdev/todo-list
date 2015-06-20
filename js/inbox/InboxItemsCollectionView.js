@@ -1,6 +1,8 @@
 
 var ItemView = Marionette.ItemView.extend({
     template: '#tpl_Items_ListItem',
+    tagName: 'li',
+    className: 'list-item',
 
     ui: {
         'complete': '.ui-complete'
@@ -13,5 +15,7 @@ var ItemView = Marionette.ItemView.extend({
 
 module.exports = Marionette.CollectionView.extend({
     childView: ItemView,
-    childViewEventPrefix: 'item'
+    childViewEventPrefix: 'item',
+    tagName: 'ul',
+    className: 'list-body'
 });

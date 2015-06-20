@@ -16,19 +16,24 @@
   }
 }
 
-.list-item {
-  margin: 2.6em 0.3em 2.6em 0.3em;
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid #bbbbbb;
+.main-view-default {
+  .top-block {
+    margin-bottom: 2em;
+  }
 }
 
-.list-item-title {
-  display: flex;
-  align-items: center;
+.list-body {
+  .list-group
+}
 
-  h3 {
-    margin: 0;
-  }
+.list-item {
+  .list-group-item;
+}
+
+.list-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .ui-complete {
     margin: 0 1em;
@@ -38,14 +43,10 @@
       color: @btn-primary-bg;
     }
   }
-
-  .controls {
-    align-self: flex-end;
-  }
 }
 
-.list-item-title.completed {
-  h3 {
+.list-item.completed .list-item-header {
+  .title {
     color: @text-muted;
     text-decoration: line-through;
   }
