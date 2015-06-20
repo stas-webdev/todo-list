@@ -2,9 +2,7 @@
 var MainView = require('./InboxMainView');
 var ItemsCollectionView = require('./InboxItemsCollectionView');
 
-var ItemsCollection = Backbone.Collection.extend({
-    localStorage: new Backbone.LocalStorage('Inbox')
-});
+var ItemsCollection = require('./InboxCollection');
 
 module.exports = Marionette.Controller.extend({
 
@@ -43,10 +41,7 @@ module.exports = Marionette.Controller.extend({
 
     onUICreateItem: function (args) {
         //console.log('onUICreateItem', arguments);
-        var modelData = {
-            created: (new Date()),
-            completed: false
-        };
+        var modelData = {};
         args.data.forEach(function (attr) {
             if ('undefined' === typeof attr.name || !attr.name) return;
             modelData[attr.name] = attr.value;
