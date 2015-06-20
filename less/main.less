@@ -1,2 +1,45 @@
 
 @import "bootstrap";
+
+.view-default {
+  padding-top: 2em;
+}
+
+.list-item {
+  margin: 2.6em 0.3em 2.6em 0.3em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #bbbbbb;
+}
+
+.list-item-title {
+  display: flex;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+  }
+
+  .ui-complete {
+    margin: 0 1em;
+    color: #bbbbbb;
+
+    &:hover {
+      color: @btn-primary-bg;
+    }
+  }
+
+  .controls {
+    align-self: flex-end;
+  }
+}
+
+.list-item-title.completed {
+  h3 {
+    color: @text-muted;
+    text-decoration: line-through;
+  }
+
+  .ui-complete {
+    color: desaturate(@btn-primary-bg, 30%);
+  }
+}

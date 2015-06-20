@@ -14,7 +14,7 @@ module.exports = function (config) {
             .pipe(source(config.bundle))
             .pipe(buffer())
             .pipe(sourcemaps.init({ loadMaps: true }))
-            .pipe(uglify())
+            //.pipe(uglify())
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(config.build));
     }
