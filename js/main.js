@@ -1,5 +1,5 @@
 var AppRouter = require('./AppRouter');
-var AppController = require('./AppController');
+var TasksController = require('./TasksController');
 
 var app = new Marionette.Application();
 
@@ -8,7 +8,7 @@ app.addRegions({
 });
 
 app.on('start', function () {
-    this.controller = new AppController();
+    this.controller = new TasksController();
     this.controller.on('view:open', onMainViewOpen);
     this.router = new AppRouter({ controller: this.controller });
     Backbone.history.start();
