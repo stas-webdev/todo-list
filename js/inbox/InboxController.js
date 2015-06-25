@@ -2,14 +2,13 @@
 var MainView = require('./InboxMainView');
 var ItemsCollectionView = require('./InboxItemsCollectionView');
 
-var ItemsCollection = require('../model/TasksCollection');
-
 module.exports = Marionette.Controller.extend({
 
     mainView: null,
 
-    initialize: function () {
-        this.collection = new ItemsCollection();
+    initialize: function (options) {
+        options = options || {};
+        this.collection = options.collection;
     },
 
     open: function () {

@@ -1,13 +1,12 @@
 var MainView = require('./ArchiveMainView');
 
-var ArchiveCollection = require('../model/TasksCollection');
-
 module.exports = Marionette.Controller.extend({
 
     mainView: null,
 
-    initialize: function () {
-        this.collection = new ArchiveCollection();
+    initialize: function (options) {
+        options = options || {};
+        this.collection = options.collection;
     },
 
     open: function () {

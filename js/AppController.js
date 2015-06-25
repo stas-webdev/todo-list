@@ -2,14 +2,22 @@
 var InboxController = require('./inbox/InboxController');
 var ArchiveController = require('./archive/ArchiveController');
 
+var TasksCollection = require('./model/TasksCollection');
+
 module.exports = Marionette.Controller.extend({
 
     initialize: function () {
-        this.inboxController = new InboxController();
+        this.tasksCollection = new TasksCollection();
+
+        this.inboxController = new InboxController({
+            collection: this.tasksCollection
+        });
         this.listenTo(this.inboxController, 'view:open', this.onViewOpen);
         this.listenTo(this.inboxController, 'item:archive', this.onItemArchive);
 
-        this.archiveController = new ArchiveController();
+        this.archiveController = new ArchiveController({
+            collection: this.tasksCollection
+        });
         this.listenTo(this.archiveController, 'view:open', this.onViewOpen);
         this.listenTo(this.archiveController, 'item:activate', this.onItemActivate);
     },
