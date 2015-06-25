@@ -15,7 +15,7 @@ var ItemView = Marionette.ItemView.extend({
     },
 
     onRender: function () {
-        if (this.model.get('completed'))
+        if (this.model.get('isCompleted'))
             this.$el.addClass('completed');
     }
 });
