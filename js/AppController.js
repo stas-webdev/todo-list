@@ -32,15 +32,17 @@ module.exports = Marionette.Controller.extend({
     onItemArchive: function (args) {
         //console.log('onItemArchive', arguments);
         var model = args.model;
-        model.destroy({ silent: (!!args.silentDestroy) });
         this.archiveController.addItem(model);
+        model.save();
     },
 
     onItemActivate: function (args) {
         //console.log('on Item Activate', arguments);
         var model = args.model;
-        model.destroy();
-        model.set('completed', false);
+        model.set('isArchived', false);
+        model.set('isCompleted', false);
+        model.set('isInbox', true);
         this.inboxController.addItem(model);
+        model.save();
     }
 });

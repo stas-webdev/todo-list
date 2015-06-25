@@ -1,10 +1,17 @@
 
+var localStorage = new Backbone.LocalStorage('Tasks');
+
 var Model = Backbone.Model.extend({
+
+    localStorage: localStorage,
+
     defaults: function () {
         return {
             created: (new Date()).toUTCString(),
             lastChanged: (new Date()).toUTCString(),
-            completed: false
+            isInbox: false,
+            isCompleted: false,
+            isArchived: false
         }
     },
 
@@ -22,11 +29,6 @@ var Model = Backbone.Model.extend({
 });
 
 module.exports = Backbone.Collection.extend({
-    localStorage: new Backbone.LocalStorage('Inbox'),
-
-    model: Model,
-
-    comparator: function (model) {
-        return -(new Date(model.get('lastChanged')));
-    }
+    localStorage: localStorage,
+    model: Model
 });

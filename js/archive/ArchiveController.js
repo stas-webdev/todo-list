@@ -1,8 +1,6 @@
 var MainView = require('./ArchiveMainView');
 
-var ArchiveCollection = Backbone.Collection.extend({
-    localStorage: new Backbone.LocalStorage('Archive')
-});
+var ArchiveCollection = require('../model/TasksCollection');
 
 module.exports = Marionette.Controller.extend({
 
@@ -26,8 +24,7 @@ module.exports = Marionette.Controller.extend({
     },
 
     addItem: function (model) {
-        this.collection.add(model);
-        model.save();
+        model.set('isArchived', true);
         return this;
     },
 

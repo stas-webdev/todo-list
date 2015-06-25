@@ -31,5 +31,13 @@ module.exports = Marionette.CollectionView.extend({
     childView: ItemView,
     childViewEventPrefix: 'item',
     tagName: 'ul',
-    className: 'list-body'
+    className: 'list-body',
+
+    filter: function (model) {
+        return model.get('isInbox');
+    },
+
+    viewComparator: function (model) {
+        return -(new Date(model.get('lastChanged')));
+    }
 });

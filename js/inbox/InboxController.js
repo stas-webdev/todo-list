@@ -2,7 +2,7 @@
 var MainView = require('./InboxMainView');
 var ItemsCollectionView = require('./InboxItemsCollectionView');
 
-var ItemsCollection = require('./InboxCollection');
+var ItemsCollection = require('../model/TasksCollection');
 
 module.exports = Marionette.Controller.extend({
 
@@ -33,15 +33,10 @@ module.exports = Marionette.Controller.extend({
         return this;
     },
 
-    addItem: function (model) {
-        this.collection.add(model);
-        model.save();
-        return this;
-    },
-
     onUICreateItem: function (args) {
         //console.log('onUICreateItem', arguments);
         var modelData = {};
+        modelData.isInbox = true;
         args.data.forEach(function (attr) {
             if ('undefined' === typeof attr.name || !attr.name) return;
             modelData[attr.name] = attr.value;
@@ -51,8 +46,8 @@ module.exports = Marionette.Controller.extend({
 
     onUICompleteItem: function (itemView, args) {
         //console.log('onUICompleteItem', arguments);
-        args.model.set('completed', true);
-        args.silentDestroy = true;
+        args.model.set('isCompleted', true);
+        args.model.set('isInbox', false);
         itemView.render();
         this.trigger('item:archive', args);
     }

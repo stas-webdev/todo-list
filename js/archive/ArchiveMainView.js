@@ -25,5 +25,9 @@ module.exports = Marionette.CompositeView.extend({
     childView: ItemView,
     childViewContainer: '.list-body',
     childViewEventPrefix: 'item',
-    className: 'list-view'
+    className: 'list-view',
+
+    filter: function (model) {
+        return model.get('isArchived');
+    }
 });
