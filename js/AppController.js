@@ -43,16 +43,6 @@ module.exports = Marionette.Controller.extend({
         this.tasksCollection.create(args.data);
     },
 
-    onItemActivate: function (args) {
-        //console.log('on Item Activate', arguments);
-        var model = args.model;
-        model.set('isArchived', false);
-        model.set('isCompleted', false);
-        model.set('isInbox', true);
-        this.inboxController.addItem(model);
-        model.save();
-    },
-
     onTaskDataChanged: function (args) {
         args.model.save();
     }
