@@ -40,7 +40,7 @@ module.exports = Marionette.Controller.extend({
             if ('undefined' === typeof attr.name || !attr.name) return;
             modelData[attr.name] = attr.value;
         });
-        this.collection.create(modelData);
+        this.trigger('item:create', { data: modelData });
     },
 
     onUICompleteItem: function (itemView, args) {

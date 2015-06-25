@@ -13,6 +13,7 @@ module.exports = Marionette.Controller.extend({
             collection: this.tasksCollection
         });
         this.listenTo(this.inboxController, 'view:open', this.onViewOpen);
+        this.listenTo(this.inboxController, 'item:create', this.onItemCreate);
         this.listenTo(this.inboxController, 'item:archive', this.onItemArchive);
 
         this.archiveController = new ArchiveController({
@@ -35,6 +36,11 @@ module.exports = Marionette.Controller.extend({
     onViewOpen: function (args) {
         //console.log('onViewOpen', arguments);
         this.trigger('view:open', args);
+    },
+
+    onItemCreate: function (args) {
+        //console.log('onItemCreate', arguments);
+        this.tasksCollection.create(args.data);
     },
 
     onItemArchive: function (args) {
