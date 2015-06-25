@@ -47,7 +47,6 @@ module.exports = Marionette.Controller.extend({
         //console.log('onUICompleteItem', arguments);
         args.model.set('isCompleted', true);
         args.model.set('isInbox', false);
-        itemView.render();
         this.trigger('item:archive', args);
     }
 });
