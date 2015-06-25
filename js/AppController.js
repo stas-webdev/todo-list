@@ -14,13 +14,13 @@ module.exports = Marionette.Controller.extend({
         });
         this.listenTo(this.inboxController, 'view:open', this.onViewOpen);
         this.listenTo(this.inboxController, 'item:create', this.onItemCreate);
-        this.listenTo(this.inboxController, 'item:archive', this.onItemArchive);
+        this.listenTo(this.inboxController, 'item:data:change', this.onTaskDataChanged);
 
         this.archiveController = new ArchiveController({
             collection: this.tasksCollection
         });
         this.listenTo(this.archiveController, 'view:open', this.onViewOpen);
-        this.listenTo(this.archiveController, 'item:activate', this.onItemActivate);
+        this.listenTo(this.archiveController, 'item:data:change', this.onTaskDataChanged);
     },
 
     openInbox: function () {
@@ -43,13 +43,6 @@ module.exports = Marionette.Controller.extend({
         this.tasksCollection.create(args.data);
     },
 
-    onItemArchive: function (args) {
-        //console.log('onItemArchive', arguments);
-        var model = args.model;
-        this.archiveController.addItem(model);
-        model.save();
-    },
-
     onItemActivate: function (args) {
         //console.log('on Item Activate', arguments);
         var model = args.model;
@@ -58,5 +51,9 @@ module.exports = Marionette.Controller.extend({
         model.set('isInbox', true);
         this.inboxController.addItem(model);
         model.save();
+    },
+
+    onTaskDataChanged: function (args) {
+        args.model.save();
     }
 });

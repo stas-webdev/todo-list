@@ -22,14 +22,13 @@ module.exports = Marionette.Controller.extend({
         this.listenTo(view, 'item:delete', this.onItemDelete);
     },
 
-    addItem: function (model) {
-        model.set('isArchived', true);
-        return this;
-    },
-
     onItemActivate: function (itemView, args) {
         //console.log('item activate', arguments);
-        this.trigger('item:activate', args);
+        args.model.set('isArchived', false);
+        args.model.set('isCompleted', false);
+        args.model.set('isInbox', true);
+        this.trigger('item:data:change', args);
+        itemView.remove();
     },
 
     onItemDelete: function (itemView, args) {
