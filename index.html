@@ -79,10 +79,21 @@
 </script>
 
 <script type="text/html" id="tpl_Items_ListItem">
-    <div class="list-item-header">
+    <div class="list-item-header inbox-list-item-header">
         <h4 class="title"><a class="ui-details" href="#"><%=title%></a></h4>
-        <div class="controls">
-            <a href="#" class="ui-complete"><i class="icon fa fa-check fa-2x"></i></a>
+        <div class="controls btn-group">
+            <a href="#" class="ui-complete btn"><i class="icon fa fa-check fa-2x"></i></a>
+            <div class="btn-group">
+                <a class="ui-plan btn" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-clock-o fa-2x"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Сегодня</a></li>
+                    <li><a href="#">Завтра</a></li>
+                    <li><a href="#">До конца недели</a></li>
+                    <li><a href="#">Точная дата</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </script>
