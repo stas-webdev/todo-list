@@ -61,20 +61,20 @@
 
 <script type="text/html" id="tpl_Inbox_MainView">
     <div class="main-view-default">
-        <div class="top-block" id="TopBlock">
-            <form id="Form_NewTask">
-                <div class="input-group input-group-lg">
-                    <input name="title" type="text" class="form-control" placeholder="Новая задача">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-level-down"></i>
-                            Создать
-                        </button>
-                    </span>
-                </div>
-            </form>
-        </div>
+        <div class="top-block" id="TopBlock"></div>
         <div id="ItemsList"></div>
+    </div>
+</script>
+
+<script type="text/html" id="tpl_Inbox_CreateForm">
+    <div class="input-group input-group-lg">
+        <input name="title" type="text" class="form-control" placeholder="Новая задача" />
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-level-down"></i>
+                Создать
+            </button>
+        </span>
     </div>
 </script>
 

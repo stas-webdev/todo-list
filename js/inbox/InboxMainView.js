@@ -1,4 +1,7 @@
 
+var CreateForm = require('./InboxCreateForm');
+var ListView = require('./InboxItemsCollectionView');
+
 module.exports = Marionette.LayoutView.extend({
     'template': '#tpl_Inbox_MainView',
 
@@ -11,14 +14,18 @@ module.exports = Marionette.LayoutView.extend({
         form: '#Form_NewTask'
     },
 
-    events: {
-        'submit @ui.form': 'onFormSubmit'
+    initialize: function () {
+        this.createForm = new CreateForm();
+        this.listenTo(this.createForm, 'submit', this.onCreateFormSubmit);
     },
 
-    onFormSubmit: function (e) {
-        e.preventDefault();
-        var data = $(e.target).serializeArray();
-        e.target.reset();
-        this.trigger('item:create', { data: data });
+    onRender: function () {
+        //console.log('InboxMainView.onRender', arguments);
+        this.formRegion.show(this.createForm);
+    },
+
+    onCreateFormSubmit: function (args) {
+        //console.log('InboxMainView.onCreateFormSubmit', arguments);
+        this.trigger('item:create', args);
     }
 });
