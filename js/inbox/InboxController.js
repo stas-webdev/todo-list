@@ -44,7 +44,7 @@ module.exports = Marionette.Controller.extend({
 
     onUICompleteItem: function (itemView, args) {
         //console.log('onUICompleteItem', arguments);
-        args.model.set('isCompleted', true);
+        args.model.set('isCompleted', !args.model.get('isCompleted'));
         args.model.set('isInbox', false);
         args.model.set('isArchived', true);
         this.trigger('item:data:change', args);
