@@ -8,27 +8,27 @@ module.exports = Marionette.Controller.extend({
     initialize: function (options) {
         options = options || {};
         this.collection = options.collection;
-
-        this.mainView = new MainView();
-        this.listenTo(this.mainView, 'render', this.onMainViewRender.bind(this));
-
-        this.createForm = new CreateForm();
-        this.listenTo(this.createForm, 'submit', this.onUICreateItem);
-
-        this.listView = new ListView({
-            collection: this.collection
-        });
-        this.listenTo(this.listView, 'item:complete', this.onUICompleteItem);
     },
 
     open: function () {
-        this.trigger('view:open', { view: this.mainView });
+        this.collection.fetch().then(function () {
+            var mainView = new MainView();
+            this.listenTo(mainView, 'render', this.onMainViewRender);
+            this.trigger('view:open', { view: mainView });
+        }.bind(this));
     },
 
     onMainViewRender: function (view) {
         //console.log('InboxController.onMainViewRender', arguments);
-        view.getRegion('form').show(this.createForm);
-        view.getRegion('list').show(this.listView);
+        var createForm = new CreateForm();
+        this.listenTo(createForm, 'submit', this.onUICreateItem);
+        view.getRegion('form').show(createForm);
+
+        var listView = new ListView({
+            collection: this.collection
+        });
+        this.listenTo(listView, 'item:complete', this.onUICompleteItem);
+        view.getRegion('list').show(listView);
     },
 
     onUICreateItem: function (args) {
