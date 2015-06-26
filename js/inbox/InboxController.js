@@ -1,35 +1,34 @@
 
 var MainView = require('./InboxMainView');
-var ItemsCollectionView = require('./InboxItemsCollectionView');
+var CreateForm = require('./InboxCreateForm');
+var ListView = require('./InboxItemsCollectionView');
 
 module.exports = Marionette.Controller.extend({
-
-    mainView: null,
 
     initialize: function (options) {
         options = options || {};
         this.collection = options.collection;
+
+        this.mainView = new MainView();
+        this.listenTo(this.mainView, 'render', this.onMainViewRender.bind(this));
+
+        this.createForm = new CreateForm();
+        this.listenTo(this.createForm, 'submit', this.onUICreateItem);
+
+        this.listView = new ListView({
+            collection: this.collection
+        });
+        this.listenTo(this.listView, 'item:complete', this.onUICompleteItem);
     },
 
     open: function () {
-        if (this.mainView) this.stopListening(this.mainView);
-        this.mainView = new MainView({ collection: this.collection });
-        this.bindViewEvents(this.mainView);
         this.trigger('view:open', { view: this.mainView });
-
-        if (this.listView) this.stopListening(this.listView);
-        this.listView = new ItemsCollectionView({ collection: this.collection });
-        this.bindViewEvents(this.listView);
-        this.collection.fetch().then(function () {
-            this.listView.render();
-            this.mainView.listRegion.show(this.listView);
-        }.bind(this));
     },
 
-    bindViewEvents: function (view) {
-        this.listenTo(view, 'item:create', this.onUICreateItem);
-        this.listenTo(view, 'item:complete', this.onUICompleteItem);
-        return this;
+    onMainViewRender: function (view) {
+        //console.log('InboxController.onMainViewRender', arguments);
+        view.getRegion('form').show(this.createForm);
+        view.getRegion('list').show(this.listView);
     },
 
     onUICreateItem: function (args) {

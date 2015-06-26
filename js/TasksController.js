@@ -25,7 +25,9 @@ module.exports = Marionette.Controller.extend({
 
     openInbox: function () {
         //console.log('open Inbox');
-        this.inboxController.open();
+        this.tasksCollection.fetch().then(function () {
+            this.inboxController.open();
+        }.bind(this));
     },
 
     openArchive: function () {
