@@ -27,7 +27,24 @@ module.exports = Marionette.CompositeView.extend({
     childViewEventPrefix: 'item',
     className: 'list-view',
 
+    childEvents: {
+        'activate': 'onTaskActivate',
+        'delete': 'onItemDelete'
+    },
+
     filter: function (model) {
         return model.get('isArchived');
+    },
+
+    onTaskActivate: function (itemView, args) {
+        args.model.set('isArchived', false);
+        args.model.set('isCompleted', false);
+        args.model.set('isInbox', true);
+        this.trigger('item:data:change', args);
+        itemView.remove();
+    },
+
+    onItemDelete: function (itemView, args) {
+        this.trigger('item:delete', args);
     }
 });

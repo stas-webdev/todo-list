@@ -1,6 +1,6 @@
 
-var ArchiveController = require('./archive/ArchiveController');
 var InboxMainView = require('./inbox/InboxMainView');
+var ArchiveMainView = require('./archive/ArchiveMainView');
 
 var TasksCollection = require('./model/TasksCollection');
 
@@ -8,12 +8,6 @@ module.exports = Marionette.Controller.extend({
 
     initialize: function () {
         this.tasksCollection = new TasksCollection();
-
-        this.archiveController = new ArchiveController({
-            collection: this.tasksCollection
-        });
-        this.listenTo(this.archiveController, 'view:open', this.onViewOpen);
-        this.listenTo(this.archiveController, 'item:data:change', this.onTaskDataChanged);
     },
 
     openInbox: function () {
@@ -21,25 +15,36 @@ module.exports = Marionette.Controller.extend({
         this.tasksCollection.fetch().then(function () {
             var mainView = new InboxMainView();
             mainView.collection = this.tasksCollection;
-            this.listenTo(mainView, 'item:create', this.onItemCreate);
-            this.listenTo(mainView, 'item:data:change', this.onTaskDataChanged);
+            this.bindViewEvents(mainView);
             this.trigger('view:open', { view: mainView });
         }.bind(this));
     },
 
     openArchive: function () {
         //console.log('open Archive');
-        this.archiveController.open();
+        this.tasksCollection.fetch().then(function () {
+            var archiveView = new ArchiveMainView({
+                collection: this.tasksCollection
+            });
+            this.bindViewEvents(archiveView);
+            this.trigger('view:open', { view: archiveView });
+        }.bind(this));
     },
 
-    onViewOpen: function (args) {
-        //console.log('onViewOpen', arguments);
-        this.trigger('view:open', args);
+    bindViewEvents: function (view) {
+        this.listenTo(view, 'item:create', this.onItemCreate);
+        this.listenTo(view, 'item:delete', this.onItemDelete);
+        this.listenTo(view, 'item:data:change', this.onTaskDataChanged);
+        return this;
     },
 
     onItemCreate: function (args) {
         //console.log('onItemCreate', arguments);
         this.tasksCollection.create(args.data);
+    },
+
+    onItemDelete: function (args) {
+        args.model.destroy();
     },
 
     onTaskDataChanged: function (args) {
