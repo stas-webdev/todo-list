@@ -1,6 +1,6 @@
 
-var InboxController = require('./inbox/InboxController');
 var ArchiveController = require('./archive/ArchiveController');
+var InboxMainView = require('./inbox/InboxMainView');
 
 var TasksCollection = require('./model/TasksCollection');
 
@@ -8,13 +8,6 @@ module.exports = Marionette.Controller.extend({
 
     initialize: function () {
         this.tasksCollection = new TasksCollection();
-
-        this.inboxController = new InboxController({
-            collection: this.tasksCollection
-        });
-        this.listenTo(this.inboxController, 'view:open', this.onViewOpen);
-        this.listenTo(this.inboxController, 'item:create', this.onItemCreate);
-        this.listenTo(this.inboxController, 'item:data:change', this.onTaskDataChanged);
 
         this.archiveController = new ArchiveController({
             collection: this.tasksCollection
@@ -26,7 +19,11 @@ module.exports = Marionette.Controller.extend({
     openInbox: function () {
         //console.log('open Inbox');
         this.tasksCollection.fetch().then(function () {
-            this.inboxController.open();
+            var mainView = new InboxMainView();
+            mainView.collection = this.tasksCollection;
+            this.listenTo(mainView, 'item:create', this.onItemCreate);
+            this.listenTo(mainView, 'item:data:change', this.onTaskDataChanged);
+            this.trigger('view:open', { view: mainView });
         }.bind(this));
     },
 
@@ -46,6 +43,6 @@ module.exports = Marionette.Controller.extend({
     },
 
     onTaskDataChanged: function (args) {
-        args.model.save();
+        args.model.save().then();
     }
 });
